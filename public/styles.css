@@ -1,0 +1,225 @@
+/* General Styles */
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-image: url("./images/scott-webb-UjupleczBOY-unsplash.jpg");
+    background-repeat: repeat;
+    background-size: cover;
+  }
+  
+  h1,
+  h2,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: "Indie Flower", cursive;
+    color: rgba(0, 0, 0, 0.719)
+  }
+  
+  p {
+    color: wheat;
+  }
+  
+  a {
+    color: #0077cc;
+    text-decoration: none;
+  }
+  
+  button,
+  input[type="submit"] {
+    background-color: #0077cc;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  button:hover,
+  input[type="submit"]:hover {
+    background-color: #005ea6;
+  }
+  
+  /* Form */
+  .register-form {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 2rem auto;
+    max-width: 500px;
+    padding: 2rem;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    padding: 0.5rem;
+    width: 100%;
+  }
+  
+  input[type="text"]:focus,
+  input[type="email"]:focus,
+  input[type="password"]:focus {
+    outline: none;
+    border-color: #0077cc;
+  }
+  
+  button[type="submit"] {
+    margin-top: 1rem;
+    width: 100%;
+  }
+  
+  /* Buttons */
+  .button {
+    background-color: #0077cc;
+    border-radius: 5px;
+    color: #fff;
+    display: inline-block;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    text-transform: uppercase;
+    transition: background-color 0.2s ease;
+  }
+  
+  .button:hover {
+    background-color: #005ea6;
+  }
+  
+  .button--secondary {
+    background-color: #fff;
+    border: firebrick;
+  }
+  
+  /* Footer section */
+  
+  
+  footer {
+    background-color: #333;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    color: #fff;
+    text-align: center;
+  }
+  
+  .p-text-size {
+    font-size: medium;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    color: white;
+  }
+  
+  /* Main page */
+  
+  main {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-top: 4rem;
+  }
+  
+  /* (A) WRAPPER */
+  .fullwrap {
+    position: relative;
+    /* required for (c2) */
+    max-width: 32%;
+    max-height: 100%;
+    /* optional */
+    margin-top: 20px;
+    margin-left: 10px;
+    float: left;
+    margin-right: 10px;
+  }
+  
+  /* (B) RESPONSIVE IMAGE */
+  .fullwrap img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 20px;
+    object-fit: fill;
+  }
+  
+  /* (C) CAPTION */
+  .fullcap {
+    /* (C1) DIMENSIONS */
+    border-radius: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+  
+    /* (C2) POSITION */
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-align: center;
+    padding-top: 20%;
+  
+    /* (C3) COLORS */
+    background-color: rgba(0, 0, 0, 0.7);
+    font-family: "Indie Flower", cursive;
+    font-size: 30px;
+    color: wheat
+  }
+  
+  /* (D) SHOW/HIDE */
+  .fullcap {
+    visibility: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .fullcap button {
+    background-color: wheat;
+    color: rgb(5, 5, 5);
+    font-family: cursive;
+  }
+  
+  .fullwrap:hover .fullcap {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  img {
+    max-width: 100%;
+    opacity: 1;
+    height: auto;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: .5s ease;
+    backface-visibility: hidden;
+  }
+  
+  
