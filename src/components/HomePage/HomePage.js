@@ -18,7 +18,7 @@ export default function Main() {
             setCategories(filteredData);
 
         } catch (error) {
-            console.log(error);
+            console.log(error.message);
         }
 
     }
@@ -40,10 +40,10 @@ export default function Main() {
             <section>
                 {categories.map(category =>
                     <div key={category._id} className={styles["box"]}>
-                        <img src={category.imageUrl} alt="Category" />
+                        <img src={category.ImageUrl} alt="Category" />
                         <div className={styles["image-overlay"]}>
-                            <h2>{category.name}</h2>
-                            <button onClick={() => handleOption(category._id)}>View category</button>
+                            <h2>{category.Name}</h2>
+                            <button onClick={() => handleOption(category.id)}>View category</button>
                         </div>
                     </div>)}
                 {categories.length === 0 && <h2>There aren`t any categories, yet</h2>}

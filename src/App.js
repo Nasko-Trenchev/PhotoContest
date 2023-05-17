@@ -7,6 +7,9 @@ import Register from './components/Register/Register'
 import Alert from './components/Alert/Alert';
 import Logout from './components/Logout/Logout';
 import Login from './components/Login/Login';
+import RouteGuard from './components/Common/RouteGuard';
+import Gallery from './components/Gallery/Gallery';
+import CreatePhotos from './components/CreatePhoto/CreatePhoto';
 
 function App() {
   return (
@@ -19,6 +22,17 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/categories/:categoryId" element={<Gallery />} />
+          <Route element={<RouteGuard />}>
+            <Route path="/categories/:categoryId/createPhoto" element={<CreatePhotos />} />
+
+            {/* <Route path="/profile" element={<Profile />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/edit/:categoryId/:photoId" element={<EditPhoto />} />
+            <Route path="/comments/:photoId/:commentId/edit" element={<EditComment />} />
+            <Route path="/createCategory" element={<CreateCategoryForm />} />
+            <Route path="/admin" element={<Admin />} /> */}
+          </Route>
         </Routes>
       </AlertProvider>
     </AuthContextProvider>
