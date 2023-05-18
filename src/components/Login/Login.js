@@ -5,6 +5,7 @@ import { AlertContext } from '../../contexts/AlertContext'
 
 import Input from '../Input/Input';
 import styles from './Login.module.css'
+import { auth } from '../../config/Firebase';
 
 // import { login } from '../../services/AuthService'
 
@@ -31,6 +32,7 @@ export default function Login() {
 
         try {
             await loginUser(formInput.email, formInput.password)
+            console.log(auth.currentUser.email)
             navigate('/');
         } catch (error) {
             setAlertState({ message: error.message, show: true })

@@ -50,7 +50,7 @@ export default function AllPhotos({
             <div className={styles["image-overlay"]}>
                 <h3>{data.title}</h3>
                 <p>Current likes {likeCount}</p>
-                <button onClick={() => handleOption(data._id)}>See details</button>
+                <button onClick={() => handleOption(data.title)}>See details</button>
             </div>
         </div>
     )

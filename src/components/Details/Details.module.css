@@ -1,0 +1,167 @@
+/* Details Page Styles */
+.details-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+}
+
+.photo-container {
+    max-width: 500px;
+    max-height: 450px;
+}
+
+.photo {
+    width: 450px;
+    height: 350px;
+    border-radius: 10px;
+}
+
+.details-container {
+    max-width: 600px;
+    width: 100%;
+}
+
+.likePar {
+    color: blue;
+    padding-left: 80px;
+    font-weight: bold;
+}
+
+.name {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.like-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.like-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #fff0f0;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.like-button:hover {
+    background-color: #e7d4d4;
+}
+
+.like-section img {
+    background-color: white;
+    width: 35px;
+    height: 35px;
+    margin-right: 8px;
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+    border-radius: 20px;
+    margin-left: 75px;
+}
+
+.like-section button {
+    margin-left: 75px;
+}
+
+.like-section img:hover {
+    -webkit-transform: scale(1.3);
+    transform: scale(1.3);
+}
+
+.hover03 figure img {
+    -webkit-transform: scale(1.5);
+    transform: scale(1.5);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+
+.hover03 figure:hover img {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+}
+
+.like-count {
+    margin-left: 1rem;
+    font-size: 1rem;
+}
+
+.comment-section {
+    max-width: 600px;
+    width: 100%;
+    margin-bottom: 80px;
+}
+
+.comment-heading {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.comment-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.comment {
+    margin-bottom: 1rem;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment-form {
+    margin-top: 1rem;
+}
+
+.comment-label {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.comment-input {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+    resize: vertical;
+}
+
+.comment-button {
+    display: block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+
+}
+
+.editButton {
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(107, 107, 107);
+    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(96, 95, 95) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 4px 8px;
+    min-height: 28px;
+    transition: background-color .24s, box-shadow .24s;
+}
+
+.editButton:hover {
+    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(0 0 0 / 12%) 0px 1px 1px 0px, rgb(84 105 212) 0px 0px 0px 1px, rgb(0 0 0 / 0%) 0px 0px 0px 0px, rgb(60 66 87 / 8%) 0px 3px 9px 0px, rgb(60 66 87 / 8%) 0px 2px 5px 0px;
+}

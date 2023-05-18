@@ -10,6 +10,7 @@ import Login from './components/Login/Login';
 import RouteGuard from './components/Common/RouteGuard';
 import Gallery from './components/Gallery/Gallery';
 import CreatePhotos from './components/CreatePhoto/CreatePhoto';
+import Details from './components/Details/Details';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
+          <Route path="/photos/:photoTitle" element={<Details />} />
           <Route path="/categories/:categoryId" element={<Gallery />} />
           <Route element={<RouteGuard />}>
             <Route path="/categories/:categoryId/createPhoto" element={<CreatePhotos />} />

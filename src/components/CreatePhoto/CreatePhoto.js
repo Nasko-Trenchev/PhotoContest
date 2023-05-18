@@ -1,8 +1,11 @@
 import { useState, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AlertContext } from '../../contexts/AlertContext'
-import { addDoc, collection } from 'firebase/firestore'
+import { addDoc, collection, setDoc, doc } from 'firebase/firestore'
 import { auth, db } from '../../config/Firebase';
+
+import { useCollectionData } from 'react-firebase-hooks/firestore';
+
 
 import Input from '../Input/Input';
 
@@ -12,11 +15,17 @@ import styles from './CreatePhoto.module.css'
 
 export default function CreatePhotos() {
 
+    // const query = collection(db, "Photos", "s1z5iNoM33rcZBJ7krug", "LikeUserId")
+
+    // const [docs, loading, error] = useCollectionData(query);
+
     const [formInput, setformInput] = useState({
         name: '',
         imageUrl: '',
         description: ''
     })
+
+    console.log(auth.currentUser.userEmail)
 
     const { setAlertState } = useContext(AlertContext)
     const photoCollectionRef = collection(db, "Photos")
@@ -51,13 +60,24 @@ export default function CreatePhotos() {
         }
 
         try {
-            await addDoc(photoCollectionRef, {
+            // await addDoc(photoCollectionRef, {
+            //     title: formInput.name,
+            //     imageUrl: formInput.imageUrl,
+            //     description: formInput.description,
+            //     userId: auth?.currentUser?.uid,
+            //     userEmail: auth?.currentUser?.email,
+            //     likeCount: Number(0),
+            //     category: categoryId,
+            // })
+            console.log(auth?.currentUser?.email)
+            await setDoc(doc(db, "Photos", `${formInput.name}`), {
                 title: formInput.name,
                 imageUrl: formInput.imageUrl,
                 description: formInput.description,
                 userId: auth?.currentUser?.uid,
+                userEmail: auth?.currentUser?.email,
                 likeCount: Number(0),
-                category: categoryId
+                category: categoryId,
             })
             navigate(`/categories/${categoryId}`)
         } catch (error) {

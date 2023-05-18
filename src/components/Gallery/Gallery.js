@@ -32,7 +32,6 @@ export default function Gallery() {
 
         const getTopPhotos = await getDocs(q);
         const filteredData = getTopPhotos.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        console.log(filteredData);
         setTopPhotos(filteredData)
     }
 
