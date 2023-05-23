@@ -2,151 +2,56 @@ import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { db, auth } from '../../config/Firebase';
 import { UserAuth } from "../../contexts/UserContext";
+import Comment from "../Comment/Comment";
 import { collection, getDocs, doc, getDoc, setDoc, updateDoc, getDocFromCache, where, query } from 'firebase/firestore'
 
 import styles from './Details.module.css'
-
-// import Comment from "../Comment/Comment";
-
-// import { getImageDetails, getPhotoCreator } from '../../services/PhotoService';
-// import { getLikeCount, createLike, getAllLikes } from '../../services/LikeService';
 
 export default function Details() {
 
     const [currentPhoto, setCurrentPhoto] = useState({});
     const [likeCount, setLikeCount] = useState(0);
     const [photoCreator, setPhotoCreator] = useState('');
-    const [likes, setLikes] = useState([]);
     const [hasVoted, sethasVoted] = useState(false);
 
     const { photoTitle } = useParams();
     const { user } = UserAuth();
-    // const { user, isAuthenticated } = useContext(UserContext);
     const navigate = useNavigate();
 
     const currentPhotoRef = doc(db, "Photos", photoTitle);
-    const photosRef = collection(db, "Photos");
-
-
-    // const query = collection(db, "Photos", "s1z5iNoM33rcZBJ7krug", "LikeUserId")
-
-    // const [docs, loading, error] = useCollectionData(query);
-
-    const getPhoto = async () => {
-        const docSnap = await getDoc(currentPhotoRef)
-        setCurrentPhoto(docSnap.data());
-        setLikeCount(docSnap.data().likeCount)
-        setPhotoCreator(docSnap.data().userEmail);
-    }
-    let unsubscribe;
-    
-    const currentPhotoCollectionRef = doc(db, "Photos", photoTitle, "UserLikes", `${user.uid}`);
-
-    const UserHasLikedTHePhoto = async () => {
-
-        // const q = await query(currentPhotoCollectionRef,
-        //     where("UserId", " >=" , `${auth?.currentUser?.uid}`)
-        // )
-        // const getTopPhotos = await getDocs(q);
-        // const filteredData = getTopPhotos.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        // console.log(filteredData);
-
-        const docSnap = await getDoc(currentPhotoCollectionRef);
-        console.log(user.uid)
-        console.log("yes")
-        if (docSnap.exists()) {
-            sethasVoted(true);
-            console.log("Document data:", docSnap.data());
-        } else {
-            // docSnap.data() will be undefined in this case
-            console.log("No such document!");
-        }
-    }
-
-
-
+    const currentPhotoCollectionRef = doc(db, "Photos", photoTitle, "UserLikes", `${user?.uid}`);
 
     useEffect(() => {
-
-        const unsubscribe = UserHasLikedTHePhoto();
-
+        const getPhoto = async () => {
+            const docSnap = await getDoc(currentPhotoRef)
+            setCurrentPhoto(docSnap.data());
+            setLikeCount(docSnap.data().likeCount)
+            setPhotoCreator(docSnap.data().userEmail);
+        }
+        const UserHasLikedTHePhoto = async () => {
+            try {
+                const docSnap = await getDoc(currentPhotoCollectionRef);
+                console.log(user?.uid)
+                if (docSnap.exists()) {
+                    sethasVoted(true);
+                    console.log("Document data:", docSnap.data());
+                } else {
+                    console.log("No such document!");
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
         getPhoto();
         UserHasLikedTHePhoto();
-        // getImageDetails(photoId)
-        //     .then(result => {
-        //         setCurrentPhoto(result);
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });;
-
-        // getLikeCount(photoId)
-        //     .then(result => {
-        //         setLikeCount(result);
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
-
-        // getPhotoCreator(photoId)
-        //     .then(result => {
-        //         setPhotoCreator(result);
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
-    }, [])
-
-    // useEffect(() => {
-    //     getAllLikes()
-    //         .then(result => {
-    //             setLikes(result);
-    //         })
-    //         .catch(err => {
-    //             console.log(err)
-    //         });
-    // }, [])
-
-    // useEffect(() => {
-
-    //     currentPhotoCollectionRef.get()
-    //     .then((docSnapShot) => {
-    //         if(docSnapShot.exists){
-    //             sethasVoted(true)
-    //         }
-    //         else {
-    //             sethasVoted(false);
-    //         }
-    //     })
-    //     const hasLikes = currentPhotoCollectionRef.id === undefined ? false : true;
-    //     const hasLikes = currentPhotoRef.data().UserLikes.some(x => x.id === auth.currentUser.uid)
-    //     const hasLikes = likes.some(x => x._ownerId === user._id && x.photoId === photoId)
-    //     sethasVoted(hasLikes)
-    // }, [hasVoted, likes, user._id])
+    }, [user])
 
     const increaseLike = async () => {
-
         await setDoc(doc(db, "Photos", `${currentPhoto.title}`, "UserLikes", `${auth?.currentUser?.uid}`), {
             UserId: auth?.currentUser?.uid,
         })
-
         await updateDoc(currentPhotoRef, { likeCount: likeCount + 1 })
-
-        // setLikeCount(oldValue => oldValue + 1)
-        // createLike({ photoId: currentPhoto._id, categoryId: currentPhoto.categoryId })
-        //     .then(() => {
-        //         sethasVoted(true);
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
-        // getAllLikes()
-        //     .then(result => {
-        //         setLikes(result)
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
+        sethasVoted(true);
     }
 
     return (
@@ -177,7 +82,7 @@ export default function Details() {
                                 </button>
                             </>}
                     </div>}
-                {/* <Comment /> */}
+                <Comment />
             </div>
         </main>
     )

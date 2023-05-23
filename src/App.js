@@ -11,6 +11,7 @@ import RouteGuard from './components/Common/RouteGuard';
 import Gallery from './components/Gallery/Gallery';
 import CreatePhotos from './components/CreatePhoto/CreatePhoto';
 import Details from './components/Details/Details';
+import EditComment from './components/Comment/EditComment/EditComment';
 
 function App() {
   return (
@@ -27,11 +28,11 @@ function App() {
           <Route path="/categories/:categoryId" element={<Gallery />} />
           <Route element={<RouteGuard />}>
             <Route path="/categories/:categoryId/createPhoto" element={<CreatePhotos />} />
+            <Route path="/comments/:photoTitle/:commentId/edit" element={<EditComment />} />
+
 
             {/* <Route path="/profile" element={<Profile />} />
-            <Route path="/logout" element={<Logout />} />
             <Route path="/edit/:categoryId/:photoId" element={<EditPhoto />} />
-            <Route path="/comments/:photoId/:commentId/edit" element={<EditComment />} />
             <Route path="/createCategory" element={<CreateCategoryForm />} />
             <Route path="/admin" element={<Admin />} /> */}
           </Route>

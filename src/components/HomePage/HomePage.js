@@ -15,6 +15,7 @@ export default function Main() {
         try {
             const data = await getDocs(categoriesRef);
             const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            console.log("Yes")
             setCategories(filteredData);
 
         } catch (error) {
@@ -39,7 +40,7 @@ export default function Main() {
             {categories.length !== 0 && <h2>Select category to participate in:</h2>}
             <section>
                 {categories.map(category =>
-                    <div key={category._id} className={styles["box"]}>
+                    <div key={category.Name} className={styles["box"]}>
                         <img src={category.ImageUrl} alt="Category" />
                         <div className={styles["image-overlay"]}>
                             <h2>{category.Name}</h2>

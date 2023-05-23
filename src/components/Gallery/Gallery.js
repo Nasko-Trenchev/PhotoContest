@@ -38,6 +38,7 @@ export default function Gallery() {
     const getAllPhotos = async () => {
         const data = await getDocs(photoCollectionRef);
         const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+        console.log(filteredData);
         setAllPhotos(filteredData);
     }
 
