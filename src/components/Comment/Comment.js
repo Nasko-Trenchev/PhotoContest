@@ -1,48 +1,38 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import { UserAuth } from "../../contexts/UserContext";
 import { AlertContext } from '../../contexts/AlertContext';
 
 import { db } from '../../config/Firebase';
-import { doc, getDocs, collection, setDoc, updateDoc, addDoc, deleteDoc } from 'firebase/firestore';
+import { doc, getDocs, collection, addDoc, deleteDoc } from 'firebase/firestore';
 
 import styles from './Comment.module.css'
-
-// import { getCommentsWithUsers, createComment, deleteComment } from '../../services/CommentService';
 
 export default function Comment() {
 
     const [comments, setComments] = useState([]);
     const [currentComment, setCurrentComment] = useState('');
 
-    const { photoTitle } = useParams();
+    const { photoId } = useParams();
     const { user } = UserAuth();
     const { setAlertState } = useContext(AlertContext)
     const navigate = useNavigate();
 
-    const currentPhotoRef = doc(db, "Photos", photoTitle);
-    const currentPhotoComments = collection(db, "Photos", photoTitle, "Comments");
+    const currentPhotoComments = collection(db, "Photos", `${photoId}`, "Comments");
+
+    const DbComments = useCallback(async () => {
+        try {
+            const docSnap = await getDocs(currentPhotoComments);
+            const filteredData = docSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            setComments(filteredData);
+        } catch (error) {
+            console.log(error)
+        }
+    }, [currentPhotoComments])
 
     useEffect(() => {
-        const DbComments = async () => {
-            try {
-                const docSnap = await getDocs(currentPhotoComments);
-                const filteredData = docSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-                setComments(filteredData);
-                console.log(filteredData);
-            } catch (error) {
-                console.log(error)
-            }
-        }
         DbComments();
-        // getCommentsWithUsers(photoId)
-        //     .then(result => {
-        //         setComments(result);
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
-    }, [])
+    }, [DbComments])
 
     const submitComment = async (e) => {
         e.preventDefault();
@@ -60,33 +50,16 @@ export default function Comment() {
                 userUid: user.uid
             })
 
-            setComments(oldstate => [...oldstate, { comment: currentComment, userEmail: user.email, userUid: user.uid }]);
+            DbComments();
             setCurrentComment('')
         } catch (error) {
             console.log(error)
         }
-
-
-        // createComment({ photoId: photoId, user: user, comment: currentComment })
-        //     .then(result => {
-        //         setComments(oldstate => [...oldstate, result]);
-        //         setCurrentComment('');
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
     }
 
     const onDeleteComment = async (id) => {
-        await deleteDoc(doc(db, "Photos", photoTitle, "Comments", `${id}`))
+        await deleteDoc(doc(db, "Photos", `${`${photoId}`}`, "Comments", `${id}`))
         setComments(oldState => oldState.filter(x => x.id !== id));
-        // deleteComment(id)
-        //     .then(() => {
-        //         setComments(oldState => oldState.filter(x => x._id !== id));
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
     }
 
     return (
@@ -98,7 +71,7 @@ export default function Comment() {
                         <span className={styles["comment-author"]}>{x.userEmail}:</span> {x.comment}
                         {user?.uid === x.userUid ?
                             <>
-                                <i onClick={() => navigate(`/comments/${photoTitle}/${x.id}/edit`)} className='fas'>&#xf591;</i>
+                                <i onClick={() => navigate(`/comments/${photoId}/${x.id}/edit`)} className='fas'>&#xf591;</i>
                                 <i onClick={() => onDeleteComment(x.id)} className='far'>&#xf2ed;</i>
                             </> : null}
                     </li>))

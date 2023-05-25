@@ -9,9 +9,10 @@ import Logout from './components/Logout/Logout';
 import Login from './components/Login/Login';
 import RouteGuard from './components/Common/RouteGuard';
 import Gallery from './components/Gallery/Gallery';
-import CreatePhotos from './components/CreatePhoto/CreatePhoto';
+import CreatePhotos from './components/CreatePhotos/CreatePhotos';
 import Details from './components/Details/Details';
 import EditComment from './components/Comment/EditComment/EditComment';
+import EditPhoto from './components/EditPhoto/EditPhoto';
 
 function App() {
   return (
@@ -24,15 +25,14 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/photos/:photoTitle" element={<Details />} />
+          <Route path="/photos/:photoId" element={<Details />} />
           <Route path="/categories/:categoryId" element={<Gallery />} />
+          <Route path="/categories/:categoryId/createPhoto" element={<CreatePhotos />} />
           <Route element={<RouteGuard />}>
-            <Route path="/categories/:categoryId/createPhoto" element={<CreatePhotos />} />
-            <Route path="/comments/:photoTitle/:commentId/edit" element={<EditComment />} />
-
+            <Route path="/comments/:photoId/:commentId/edit" element={<EditComment />} />
+            <Route path="/edit/:categoryId/:photoId" element={<EditPhoto />} />
 
             {/* <Route path="/profile" element={<Profile />} />
-            <Route path="/edit/:categoryId/:photoId" element={<EditPhoto />} />
             <Route path="/createCategory" element={<CreateCategoryForm />} />
             <Route path="/admin" element={<Admin />} /> */}
           </Route>

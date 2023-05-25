@@ -1,9 +1,9 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { db, auth } from '../../config/Firebase';
 import { UserAuth } from "../../contexts/UserContext";
 import Comment from "../Comment/Comment";
-import { collection, getDocs, doc, getDoc, setDoc, updateDoc, getDocFromCache, where, query } from 'firebase/firestore'
+import {doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 
 import styles from './Details.module.css'
 
@@ -14,16 +14,16 @@ export default function Details() {
     const [photoCreator, setPhotoCreator] = useState('');
     const [hasVoted, sethasVoted] = useState(false);
 
-    const { photoTitle } = useParams();
+    const { photoId } = useParams();
     const { user } = UserAuth();
     const navigate = useNavigate();
 
-    const currentPhotoRef = doc(db, "Photos", photoTitle);
-    const currentPhotoCollectionRef = doc(db, "Photos", photoTitle, "UserLikes", `${user?.uid}`);
+    const currentPhotoRef = doc(db, "Photos", photoId);
+    const currentPhotoCollectionRef = doc(db, "Photos", photoId, "UserLikes", `${user?.uid}`);
 
     useEffect(() => {
         const getPhoto = async () => {
-            const docSnap = await getDoc(currentPhotoRef)
+            const docSnap = await getDoc(currentPhotoRef);
             setCurrentPhoto(docSnap.data());
             setLikeCount(docSnap.data().likeCount)
             setPhotoCreator(docSnap.data().userEmail);
@@ -44,7 +44,7 @@ export default function Details() {
         }
         getPhoto();
         UserHasLikedTHePhoto();
-    }, [user])
+    }, [user, currentPhotoRef, currentPhotoCollectionRef])
 
     const increaseLike = async () => {
         await setDoc(doc(db, "Photos", `${currentPhoto.title}`, "UserLikes", `${auth?.currentUser?.uid}`), {
@@ -77,7 +77,7 @@ export default function Details() {
                             :
                             <>
                                 <button className={styles["editButton"]} onClick={() =>
-                                    navigate(`/edit/${currentPhoto.categoryId}/${currentPhoto._id}`)}>
+                                    navigate(`/edit/${currentPhoto.category}/${photoId}`)}>
                                     Edit
                                 </button>
                             </>}

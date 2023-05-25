@@ -14,7 +14,7 @@ export default function AllPhotos({
 
     const [likeCount, setLikeCount] = useState(0);
 
-    const photo = doc(db, "Photos", data.id);
+    const photo = doc(db, "Photos", `${data.id}`);
 
     const getCurrentPhoto = async () => {
 

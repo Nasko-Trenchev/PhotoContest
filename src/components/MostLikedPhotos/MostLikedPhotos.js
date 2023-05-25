@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { db } from '../../config/Firebase';
 import { doc, getDoc } from 'firebase/firestore'
 
@@ -13,10 +13,9 @@ export default function MostLikedPhotos({
 
     const [likeCount, setLikeCount] = useState(0);
 
-    const photo = doc(db, "Photos", data.id);
+    const photo = doc(db, "Photos", `${data.id}`);
 
-    const getCurrentPhoto = async () => {
-
+    const getCurrentPhoto = useCallback(async () => {
         try {
             const docSnap = await getDoc(photo);
             setLikeCount(docSnap.data().likeCount)
@@ -24,7 +23,7 @@ export default function MostLikedPhotos({
             console.log(error.message)
         }
 
-    }
+    }, [photo])
 
     useEffect(() => {
         getCurrentPhoto();
@@ -35,7 +34,7 @@ export default function MostLikedPhotos({
         //     .catch(err => {
         //         console.log(err)
         //     });
-    }, [])
+    }, [getCurrentPhoto])
 
     const navigate = useNavigate();
 

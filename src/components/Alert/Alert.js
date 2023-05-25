@@ -8,10 +8,12 @@ export default function Alert () {
 
     useEffect(() => {
         const id = setTimeout(() => {
-            setAlertState({ show: false, message: '' })
+            if(alertState.show) {
+                setAlertState({ show: false, message: '' })
+            }
         }, 3000)
         return () => clearTimeout(id)
-    }, [alertState, setAlertState])
+    }, [alertState])
 
     return (
         alertState.show && (

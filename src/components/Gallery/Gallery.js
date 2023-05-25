@@ -1,16 +1,12 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { db, auth } from '../../config/Firebase';
+import { useState, useEffect, useCallback } from 'react';
+import { db } from '../../config/Firebase';
 import { getDocs, getDoc, collection, query, orderBy, limit, doc } from 'firebase/firestore'
 
 import styles from './Gallery.module.css';
 
 import MostLikedPhotos from '../MostLikedPhotos/MostLikedPhotos';
 import AllPhotos from '../AllPhotos/AllPhotos';
-
-// import { getCategory } from '../../services/CategoryService';
-// import { getCategoryPhotos } from '../../services/PhotoService';
-// import { getTopLikedPhotos } from '../../services/LikeService';
 
 export default function Gallery() {
 
@@ -24,8 +20,7 @@ export default function Gallery() {
     const photoCollectionRef = collection(db, "Photos");
 
 
-    const queryTopPhotos = async () => {
-
+    const queryTopPhotos = useCallback(async () => {
         const q = await query(photoCollectionRef,
             orderBy('likeCount', 'desc'),
             limit(3))
@@ -33,49 +28,27 @@ export default function Gallery() {
         const getTopPhotos = await getDocs(q);
         const filteredData = getTopPhotos.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
         setTopPhotos(filteredData)
-    }
+    }, [photoCollectionRef])
 
-    const getAllPhotos = async () => {
+    const getAllPhotos = useCallback(async () => {
         const data = await getDocs(photoCollectionRef);
+        console.log(data);
         const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        console.log(filteredData);
         setAllPhotos(filteredData);
-    }
+    }, [photoCollectionRef])
 
-    const getCategory = async () => {
+    const getCategory = useCallback(async () => {
         const categoryRef = doc(db, "Categories", categoryId);
         const docSnap = await getDoc(categoryRef);
         setCategory(docSnap.data())
-    }
+    }, [categoryId])
 
     useEffect(() => {
 
         queryTopPhotos();
         getAllPhotos();
         getCategory();
-        // getTopLikedPhotos(categoryId)
-        //   .then(result => {
-        //     setTopPhotos(result);
-        //   })
-        //   .catch(err => {
-        //     console.log(err)
-        //   });
-
-        // getCategory(categoryId)
-        //   .then(result => {
-        //     setCategory(result)
-        //   })
-        //   .catch(err => {
-        //     console.log(err)
-        //   });
-
-        // getCategoryPhotos(categoryId)
-        //   .then(result => {
-        //     setAllPhotos(result);
-        //   }).catch(err => {
-        //     console.log(err)
-        //   });
-    }, [])
+    }, [queryTopPhotos, getAllPhotos, getCategory])
 
 
     const navigate = useNavigate();

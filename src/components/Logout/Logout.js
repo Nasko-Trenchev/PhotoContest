@@ -1,21 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useContext } from "react";
+import { useCallback, useEffect } from "react";
 import { UserAuth } from "../../contexts/UserContext";
 import { auth } from "../../config/Firebase";
 
-
-// import { logout } from '../../services/AuthService';
-
 export default function Logout() {
-    // const { user, userLogoutHandler } = useContext(UserContext)
 
     const { signOutUser } = UserAuth();
     const navigate = useNavigate();
 
-    const onLogout = async () => {
+    const onLogout = useCallback(async () => {
 
         await signOutUser(auth);
-    }
+    }, [signOutUser])
 
     useEffect(() => {
         onLogout();
@@ -25,7 +21,7 @@ export default function Logout() {
         //         userLogoutHandler();
         //         navigate("/");
         //     });
-    }, [navigate])
+    }, [onLogout, navigate])
 
     return null;
 }

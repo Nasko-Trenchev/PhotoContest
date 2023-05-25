@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../config/Firebase';
-import { getDoc, doc, getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 
 import styles from './HomePage.module.css'
 
@@ -11,7 +11,7 @@ export default function Main() {
 
     const categoriesRef = collection(db, "Categories");
 
-    const getCategories = async () => {
+    const getCategories = useCallback(async () => {
         try {
             const data = await getDocs(categoriesRef);
             const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
@@ -22,10 +22,11 @@ export default function Main() {
             console.log(error.message);
         }
 
-    }
+    }, [categoriesRef])
+    
     useEffect(() => {
         getCategories()
-    }, [])
+    }, [getCategories])
 
     const navigate = useNavigate();
 

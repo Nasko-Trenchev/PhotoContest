@@ -1,8 +1,6 @@
 import { useContext, useState } from "react";
 import { UserAuth } from "../../contexts/UserContext";
 import { useNavigate, NavLink } from "react-router-dom";
-import { auth } from '../../config/Firebase';
-// import { register } from '../../services/AuthService';
 import { AlertContext } from '../../contexts/AlertContext'
 
 import Input from "../Input/Input";
@@ -19,10 +17,8 @@ export default function Register() {
     })
 
     const navigate = useNavigate();
-    const { createUser, user } = UserAuth()
+    const { createUser } = UserAuth()
     const { setAlertState } = useContext(AlertContext)
-
-    console.log(auth.currentUser || "Ne");
 
     const onUserInput = (e) => {
         setformInput(oldData => ({

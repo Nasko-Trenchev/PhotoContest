@@ -16,26 +16,18 @@ export default function EditComment() {
     const [formInput, setFormInput] = useState('');
     const [currentComment, setCurrentComment] = useState({})
 
-    const { commentId, photoTitle } = useParams();
+    const { commentId, photoId } = useParams();
     console.log(commentId);
     const { user } = UserAuth();
     const { setAlertState } = useContext(AlertContext)
 
-    const commentRef = doc(db, "Photos", `${photoTitle}`, "Comments", `${commentId}`);
+    const commentRef = doc(db, "Photos", `${photoId}`, "Comments", `${commentId}`);
     useEffect(() => {
-
         const getCurrentComment = async () => {
             const commentToUpdate = await getDoc(commentRef);
             setCurrentComment(commentToUpdate.data());
         }
         getCurrentComment();
-        // getComment(commentId)
-        //     .then(result => {
-        //         setFormInput(result.comment);
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });
     }, [commentId])
 
     const navigate = useNavigate();
@@ -52,7 +44,7 @@ export default function EditComment() {
             await updateDoc(commentRef, {
                 comment: formInput
             })
-            navigate(`/photos/${photoTitle}`)
+            navigate(`/photos/${photoId}`)
         } catch (error) {
             console.log(error)
         }
