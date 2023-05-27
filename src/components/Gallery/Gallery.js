@@ -22,9 +22,11 @@ export default function Gallery() {
     useEffect(() => {
 
         const getAllPhotos = async () => {
-            const data = await getDocs(photoCollectionRef);
-            console.log(data);
-            const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            const q = await query(photoCollectionRef,
+                orderBy('likeCount', 'desc'),
+                where("category", "==", `${categoryId}`))
+                const docSnap = await getDocs(q);
+            const filteredData = docSnap.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
             setAllPhotos(filteredData);
         }
 

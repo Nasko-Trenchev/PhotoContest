@@ -14,6 +14,7 @@ import Details from './components/Details/Details';
 import EditComment from './components/Comment/EditComment/EditComment';
 import EditPhoto from './components/EditPhoto/EditPhoto';
 import Profile from './components/Profile/Profile';
+import About from './components/About/About';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<About />} />
           <Route path="/photos/:photoId" element={<Details />} />
           <Route path="/categories/:categoryId" element={<Gallery />} />
           <Route path="/categories/:categoryId/createPhoto" element={<CreatePhotos />} />

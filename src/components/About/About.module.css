@@ -1,0 +1,45 @@
+.gallery {
+    box-sizing: border-box;
+}
+
+.gallery h1 {
+    font-size: 48px;
+    padding-top: 40px;
+}
+
+.gallery h2 {
+    font-size: 32px;
+    padding-top: 40px;
+}
+
+.gallery section {
+    min-height: 600px;
+    min-width: 800px;
+    display: block;
+    justify-content: space-evenly;
+    flex-flow: row wrap;
+    align-items: top;
+    transition: transform 0.2s ease-in-out;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.gallery ul {
+    display: block;
+    padding-top: 30px;
+    font-weight: bold;
+}
+
+.gallery li {
+    display: block;
+    margin-top: 0.7rem;
+    font-weight: bold;
+}
+
+.gallery p {
+    display: block;
+    padding-top: 30px;
+    color: black;
+    font-weight: bold;
+    line-height: 30px;
+}

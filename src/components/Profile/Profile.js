@@ -17,8 +17,6 @@ export default function Profile() {
     const { user } = UserAuth();
     const navigate = useNavigate();
 
-
-
     useEffect(() => {
 
         const queryTopPhotos = async () => {
