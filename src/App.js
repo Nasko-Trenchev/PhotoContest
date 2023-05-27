@@ -15,6 +15,7 @@ import EditComment from './components/Comment/EditComment/EditComment';
 import EditPhoto from './components/EditPhoto/EditPhoto';
 import Profile from './components/Profile/Profile';
 import About from './components/About/About';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             <Route path="/admin" element={<Admin />} /> */}
           </Route>
         </Routes>
+        <Footer />
       </AlertProvider>
     </AuthContextProvider>
 
