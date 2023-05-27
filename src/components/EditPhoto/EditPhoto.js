@@ -14,30 +14,24 @@ export default function EditPhoto() {
         description: '',
     })
     const { photoId } = useParams();
-    console.log(photoId)
     const { setAlertState } = useContext(AlertContext)
     const navigate = useNavigate();
 
     const currentPhotoRef = doc(db, "Photos", `${photoId}`);
-    
+
     useEffect(() => {
 
         const getCurrentPhoto = async () => {
             try {
                 const docSnap = await getDoc(currentPhotoRef);
                 console.log(docSnap.data())
-            setCurrentPhoto(docSnap.data())
+                setCurrentPhoto(docSnap.data())
             } catch (error) {
                 console.log(error);
             }
-          
         }
         getCurrentPhoto();
-        // getImageDetails(photoId)
-        //     .then(result => {
-        //         setCurrentPhoto(result);
-        //     })
-    }, [photoId, currentPhotoRef])
+    }, [photoId])
 
     const handleChange = (e) => {
         setformInput({
@@ -72,14 +66,9 @@ export default function EditPhoto() {
                 title: formInput.title
             })
         } catch (error) {
-            
+
         }
-        // editPhoto(photoId, { categoryId, ...formInput })
-        //     .then(() => {
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     });;
+  
 
         navigate(`/photos/${photoId}`)
     }

@@ -28,7 +28,7 @@ export default function Comment() {
         } catch (error) {
             console.log(error)
         }
-    }, [currentPhotoComments])
+    }, [])
 
     useEffect(() => {
         DbComments();

@@ -7,6 +7,7 @@ import {doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
 
 import styles from './Details.module.css'
 
+
 export default function Details() {
 
     const [currentPhoto, setCurrentPhoto] = useState({});
@@ -20,9 +21,11 @@ export default function Details() {
 
     const currentPhotoRef = doc(db, "Photos", photoId);
     const currentPhotoCollectionRef = doc(db, "Photos", photoId, "UserLikes", `${user?.uid}`);
+    console.log(user.uid)
 
     useEffect(() => {
-        const getPhoto = async () => {
+
+        const getPhoto = async () => {  
             const docSnap = await getDoc(currentPhotoRef);
             setCurrentPhoto(docSnap.data());
             setLikeCount(docSnap.data().likeCount)
@@ -31,7 +34,8 @@ export default function Details() {
         const UserHasLikedTHePhoto = async () => {
             try {
                 const docSnap = await getDoc(currentPhotoCollectionRef);
-                console.log(user?.uid)
+                console.log(user?.uid);
+                console.log(hasVoted);
                 if (docSnap.exists()) {
                     sethasVoted(true);
                     console.log("Document data:", docSnap.data());
@@ -44,12 +48,13 @@ export default function Details() {
         }
         getPhoto();
         UserHasLikedTHePhoto();
-    }, [user, currentPhotoRef, currentPhotoCollectionRef])
+    }, [user, photoId])
 
     const increaseLike = async () => {
-        await setDoc(doc(db, "Photos", `${currentPhoto.title}`, "UserLikes", `${auth?.currentUser?.uid}`), {
+        await setDoc(doc(db, "Photos", `${photoId}`, "UserLikes", `${auth?.currentUser?.uid}`), {
             UserId: auth?.currentUser?.uid,
         })
+        console.log(currentPhoto);
         await updateDoc(currentPhotoRef, { likeCount: likeCount + 1 })
         sethasVoted(true);
     }

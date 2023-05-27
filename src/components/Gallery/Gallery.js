@@ -1,12 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { db } from '../../config/Firebase';
-import { getDocs, getDoc, collection, query, orderBy, limit, doc } from 'firebase/firestore'
+import { getDocs, getDoc, collection, query, orderBy, limit, doc, where } from 'firebase/firestore'
 
 import styles from './Gallery.module.css';
 
 import MostLikedPhotos from '../MostLikedPhotos/MostLikedPhotos';
 import AllPhotos from '../AllPhotos/AllPhotos';
+
+const photoCollectionRef = collection(db, "Photos");
 
 export default function Gallery() {
 
@@ -17,39 +19,40 @@ export default function Gallery() {
 
     const { categoryId } = useParams();
 
-    const photoCollectionRef = collection(db, "Photos");
+    useEffect(() => {
 
+        const getAllPhotos = async () => {
+            const data = await getDocs(photoCollectionRef);
+            console.log(data);
+            const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            setAllPhotos(filteredData);
+        }
 
-    const queryTopPhotos = useCallback(async () => {
-        const q = await query(photoCollectionRef,
-            orderBy('likeCount', 'desc'),
-            limit(3))
+        const queryTopPhotos = async () => {
+            const q = await query(photoCollectionRef,
+                orderBy('likeCount', 'desc'),
+                where("category", "==", `${categoryId}`),
+                limit(3))
 
-        const getTopPhotos = await getDocs(q);
-        const filteredData = getTopPhotos.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        setTopPhotos(filteredData)
-    }, [photoCollectionRef])
+            const getTopPhotos = await getDocs(q);
+            const filteredData = getTopPhotos.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+            setTopPhotos(filteredData)
+        }
 
-    const getAllPhotos = useCallback(async () => {
-        const data = await getDocs(photoCollectionRef);
-        console.log(data);
-        const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-        setAllPhotos(filteredData);
-    }, [photoCollectionRef])
+        queryTopPhotos();
+        getAllPhotos();
 
-    const getCategory = useCallback(async () => {
-        const categoryRef = doc(db, "Categories", categoryId);
-        const docSnap = await getDoc(categoryRef);
-        setCategory(docSnap.data())
     }, [categoryId])
 
     useEffect(() => {
 
-        queryTopPhotos();
-        getAllPhotos();
+        const getCategory = async () => {
+            const categoryRef = doc(db, "Categories", categoryId);
+            const docSnap = await getDoc(categoryRef);
+            setCategory(docSnap.data())
+        }
         getCategory();
-    }, [queryTopPhotos, getAllPhotos, getCategory])
-
+    }, [categoryId])
 
     const navigate = useNavigate();
 

@@ -63,7 +63,7 @@ export default function CreatePhotos() {
             })
             navigate(`/categories/${categoryId}`)
         } catch (error) {
-            // setAlertState({ message: error.message, show: true })
+            setAlertState({ message: error.message, show: true })
             setformInput({
                 name: '',
                 imageUrl: '',

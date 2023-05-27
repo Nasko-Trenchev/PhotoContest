@@ -13,6 +13,7 @@ import CreatePhotos from './components/CreatePhotos/CreatePhotos';
 import Details from './components/Details/Details';
 import EditComment from './components/Comment/EditComment/EditComment';
 import EditPhoto from './components/EditPhoto/EditPhoto';
+import Profile from './components/Profile/Profile';
 
 function App() {
   return (
@@ -24,16 +25,15 @@ function App() {
           <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/logout" element={<Logout />} />
           <Route path="/photos/:photoId" element={<Details />} />
           <Route path="/categories/:categoryId" element={<Gallery />} />
           <Route path="/categories/:categoryId/createPhoto" element={<CreatePhotos />} />
           <Route element={<RouteGuard />}>
             <Route path="/comments/:photoId/:commentId/edit" element={<EditComment />} />
             <Route path="/edit/:categoryId/:photoId" element={<EditPhoto />} />
-
-            {/* <Route path="/profile" element={<Profile />} />
-            <Route path="/createCategory" element={<CreateCategoryForm />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="/profile" element={<Profile />} />
+            {/*  <Route path="/createCategory" element={<CreateCategoryForm />} />
             <Route path="/admin" element={<Admin />} /> */}
           </Route>
         </Routes>

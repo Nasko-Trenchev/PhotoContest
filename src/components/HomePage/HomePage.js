@@ -5,24 +5,22 @@ import { getDocs, collection } from 'firebase/firestore';
 
 import styles from './HomePage.module.css'
 
+const categoriesRef = collection(db, "Categories");
+
 export default function Main() {
 
     const [categories, setCategories] = useState([]);
-
-    const categoriesRef = collection(db, "Categories");
 
     const getCategories = useCallback(async () => {
         try {
             const data = await getDocs(categoriesRef);
             const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-            console.log("Yes")
             setCategories(filteredData);
 
         } catch (error) {
             console.log(error.message);
         }
-
-    }, [categoriesRef])
+    }, [])
     
     useEffect(() => {
         getCategories()
