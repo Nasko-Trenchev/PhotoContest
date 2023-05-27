@@ -66,9 +66,9 @@ export default function EditPhoto() {
                 title: formInput.title
             })
         } catch (error) {
-
+            console.log(error);
         }
-  
+
 
         navigate(`/photos/${photoId}`)
     }

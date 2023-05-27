@@ -11,7 +11,7 @@ export default function Alert () {
             if(alertState.show) {
                 setAlertState({ show: false, message: '' })
             }
-        }, 3000)
+        }, 33000)
         return () => clearTimeout(id)
     }, [alertState])
 
